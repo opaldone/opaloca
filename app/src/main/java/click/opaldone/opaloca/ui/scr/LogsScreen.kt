@@ -56,7 +56,7 @@ class LogsScreen(private val vm: ViewMod) {
                             style = MaterialTheme.typography.labelSmall,
                         )
                     }
-                    Divider(color = Color(0xFFd7d7d7))
+                    HorizontalDivider(color = Color(0xFFd7d7d7))
                 }
             }
             Row(
