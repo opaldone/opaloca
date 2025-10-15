@@ -31,33 +31,33 @@ class HomeScreen(
         ){
             Row() {
                 Text(
-                    text = "Nickname",
+                    text = "nickname",
                     textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color(0xff575757),
+                    fontSize = 14.sp,
+                    color = Color(0xff979797),
                     modifier = Modifier.width(100.dp)
                 )
                 Text(
                     text = "$wsname",
                     textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color(0xff2c5de5),
+                    fontSize = 14.sp,
+                    color = Color(0xff131313),
                     modifier = Modifier.width(200.dp)
                 )
             }
             Row() {
                 Text(
-                    text = "WS URL",
+                    text = "url",
                     textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color(0xff575757),
+                    fontSize = 14.sp,
+                    color = Color(0xff979797),
                     modifier = Modifier.width(100.dp)
                 )
                 Text(
                     text = "$wsurl",
                     textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color(0xff2c5de5),
+                    fontSize = 14.sp,
+                    color = Color(0xff131313),
                     modifier = Modifier.width(200.dp)
                 )
             }
