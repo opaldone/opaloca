@@ -29,6 +29,7 @@ import android.content.SharedPreferences
 import androidx.navigation.NavController
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.dts.Client
+import click.opaldone.opaloca.loga.show_log
 
 class SettingsScreen(
     val ctx: Context,

@@ -57,8 +57,6 @@ class WsService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onDestroy() {
-        gui_rec("onDestroy")
-
         wscli.close(1000, "Service destroyed")
         okcli.dispatcher.executorService.shutdown()
 
@@ -86,7 +84,7 @@ class WsService : Service() {
     }
 
     fun connectWebSocket() {
-        gui_rec("connecting to: $ser_wsurl")
+        gui_rec("Connecting to: $ser_wsurl")
 
         val request = Request.Builder()
             .url(ser_wsurl!!)
@@ -101,18 +99,6 @@ class WsService : Service() {
         intent.action = action_log
         intent.putExtra("log_mes", msg)
         sendBroadcast(intent)
-    }
-
-    fun notif(msg: String) {
-        val bld = NotificationCompat.Builder(this, channelID)
-        .setContentText(msg)
-        .setSmallIcon(R.drawable.ic_launcher)
-        .build()
-
-        val notif_man = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notif_man.notify(NOTIFICATION_ID, bld)
-
-        gui_rec(msg)
     }
 
     fun sendMessage(msg: String) {

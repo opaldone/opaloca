@@ -16,6 +16,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import click.opaldone.opaloca.wsa.WsService
 import click.opaldone.opaloca.dts.GuiRec
+import click.opaldone.opaloca.loga.show_log
 
 const val ACTION_LOG = "opaloca.gui.rec.logmes"
 
@@ -69,7 +70,7 @@ class MainActivity : ComponentActivity() {
 fun navStart(
     ctx: Context,
     client: Client,
-    sharep:SharedPreferences,
+    sharep: SharedPreferences,
     guir: GuiRec,
     vm: ViewMod = viewModel()
 ) {

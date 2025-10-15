@@ -3,7 +3,7 @@
     <string name="r_home">Home</string>
     <string name="r_logs">Logs</string>
     <string name="r_set">Settings</string>
-    <string name="ws_url">wss://admigo.so:8080</string>
+    <string name="ws_url">wss://admigo.so:8088</string>
     <string name="ws_name">shpavser</string>
     <string name="save">Save</string>
 </resources>

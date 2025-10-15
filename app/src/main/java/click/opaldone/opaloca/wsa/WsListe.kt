@@ -26,7 +26,6 @@ class WsListe(
     private val locl = LocationServices.getFusedLocationProviderClient(ser)
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
-        ser.gui_rec("onOpen")
         send_hi()
     }
 
@@ -40,12 +39,11 @@ class WsListe(
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        ser.gui_rec("onClosing")
         webSocket.close(1000, null)
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        ser.gui_rec("failure: ${t.message}")
+        ser.gui_rec("Failure: ${t.message}")
 
         Handler(Looper.getMainLooper()).postDelayed({
             ser.connectWebSocket()
@@ -53,7 +51,6 @@ class WsListe(
     }
 
     private fun send_hi() {
-        ser.gui_rec("send_hi")
         val js = getJsonHi(ser.ser_cid!!, ser.ser_nik)
         ser.sendMessage(js)
     }
@@ -67,8 +64,6 @@ class WsListe(
             ser.gui_rec("Permissions were not permitted")
             return
         }
-
-        ser.gui_rec("send_loca")
 
         locl.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token,

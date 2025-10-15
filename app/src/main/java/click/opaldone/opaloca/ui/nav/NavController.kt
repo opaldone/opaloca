@@ -31,6 +31,7 @@ import click.opaldone.opaloca.ui.scr.HomeScreen
 import click.opaldone.opaloca.ui.scr.LogsScreen
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.dts.ViewMod
+import click.opaldone.opaloca.loga.show_log
 
 class NavController(
     val ctx: Context,
@@ -78,9 +79,7 @@ class NavController(
                     selected = currentRoute == navItem.route,
                     onClick = {
                         navController.navigate(navItem.route) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                             launchSingleTop = true
-                            restoreState = true
                         }
                     },
                     icon = {
