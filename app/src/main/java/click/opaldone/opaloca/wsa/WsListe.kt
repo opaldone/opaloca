@@ -3,9 +3,10 @@ package click.opaldone.opaloca.wsa
 import okhttp3.WebSocketListener
 import okhttp3.WebSocket
 import okhttp3.Response
-import android.content.Context
+import android.content.Context.BATTERY_SERVICE
 import android.os.Handler
 import android.os.Looper
+import android.os.BatteryManager;
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -68,7 +69,10 @@ class WsListe(
         locl.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token,
         ).addOnSuccessListener { loca ->
-            val js = getJsonLoca(ser_cid!!, ser_nik, loca)
+            val bm = ser.getSystemService(BATTERY_SERVICE) as BatteryManager
+            val bat = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+
+            val js = getJsonLoca(ser_cid!!, ser_nik, loca, bat)
             ser.sendMessage(js)
         }
     }

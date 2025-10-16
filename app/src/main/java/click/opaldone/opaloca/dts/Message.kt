@@ -25,6 +25,7 @@ data class Lo(
 data class ClientHi(
     val cid: String,
     val nik: String,
+    val bat: Int,
     val issender: Boolean = true,
     val pos: Lo?
 )
@@ -42,22 +43,23 @@ fun decMessage(msg: String): Message? {
     return ret
 }
 
-fun getJsonLoca(cid: String, nik: String?, loca: Location?): String {
+fun getJsonLoca(cidin: String, nikin: String?, locain: Location?, batin: Int): String {
     val gson = Gson()
 
     var lo_pos: Lo? = null;
 
-    if (loca != null) {
+    if (locain != null) {
         lo_pos = Lo(
-            lat = loca.latitude,
-            lng = loca.longitude,
-            acc = loca.accuracy
+            lat = locain.latitude,
+            lng = locain.longitude,
+            acc = locain.accuracy
         )
     }
 
     val ob = ClientHi(
-        cid = cid,
-        nik = nik ?: "",
+        cid = cidin,
+        nik = nikin ?: "",
+        bat = batin,
         pos = lo_pos
     )
 
@@ -73,12 +75,13 @@ fun getJsonLoca(cid: String, nik: String?, loca: Location?): String {
     return ret
 }
 
-fun getJsonHi(cid: String, nik: String?): String {
+fun getJsonHi(cidin: String, nikin: String?): String {
     val gson = Gson()
 
     val ob = ClientHi(
-        cid = cid,
-        nik = nik ?: "",
+        cid = cidin,
+        nik = nikin ?: "",
+        bat = -1,
         pos = null
     )
     val cojs = gson.toJson(ob);
