@@ -12,12 +12,17 @@ if [[ ! $par ]]; then
     # $aa logcat -v tag
     $aa logcat -v tag \
         *:S  \
-        AndroidRuntime:E \
         WM-SystemFgDispatcher:I \
-        ActivityManager:W \
+        WM-SystemFgDispatcher:W \
+        WM-SystemFgDispatcher:E \
         NotificationService:E \
-        # libPowerHal:I \
+        AndroidRuntime:W \
+        AndroidRuntime:E \
+        ActivityManager:W \
+        ActivityManager:E \
         some:D
+
+        # libPowerHal:I \
 
     exit 0
 fi
