@@ -27,7 +27,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.foundation.layout.IntrinsicSize
 
@@ -59,11 +60,7 @@ import click.opaldone.opaloca.dts.ShareTools
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.loga.show_log
 
-class SettingsScreen(
-    val ctx: Context,
-    val nc: NavController,
-    val back: String,
-) {
+class SettingsScreen(val ctx: Context, val nav: Navig) {
     val sha = ShareTools(ctx)
 
     fun saveSettings(urlin: String, nikin: String, ridin: String) {
@@ -71,7 +68,7 @@ class SettingsScreen(
         sha.set_nik(nikin)
         sha.set_roomid(ridin)
 
-        nc.navigate(back)
+        nav.navMap()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -85,9 +82,10 @@ class SettingsScreen(
         ) {
             OutlinedTextField(
                 modifier = Modifier
-                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable)
-                .fillMaxWidth()
-                .padding(5.dp),
+                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable)
+                    .fillMaxWidth()
+                    .padding(5.dp),
+                textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
                 shape = RoundedCornerShape(7.dp),
                 value = state.value,
                 onValueChange = {
@@ -106,21 +104,28 @@ class SettingsScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color(0xfff0f0f0),
-                    focusedBorderColor = Color(0xff2c5de5)
+                    unfocusedBorderColor = Color(0xffd7d7d7),
+                    focusedBorderColor = Color(0xff00a700)
                 )
             )
             DropdownMenu(
                 modifier = Modifier
-                .background(Color.White)
-                .exposedDropdownSize(true),
+                    .background(Color(0xff373737))
+                    .exposedDropdownSize(true),
                 properties = PopupProperties(focusable = false),
+                shape = RoundedCornerShape(7.dp),
                 expanded = expa,
                 onDismissRequest = { expa = false },
             ) {
                 list_items.forEach { opt ->
                     DropdownMenuItem(
-                        text = { Text(opt) },
+                        text = {
+                            Text(
+                                text = opt,
+                                fontSize = 18.sp,
+                                color = Color(0xffffffff)
+                            )
+                        },
                         onClick = {
                             state.value = opt
                             expa = false
@@ -165,10 +170,13 @@ class SettingsScreen(
             ) {
                 ExpaList(host_url, host_list, "Host")
 
+                Spacer(Modifier.padding(10.dp))
+
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
+                    textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
                     shape = RoundedCornerShape(7.dp),
                     value = nik.value,
                     onValueChange = {
@@ -185,10 +193,12 @@ class SettingsScreen(
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
                         unfocusedContainerColor = Color.White,
-                        unfocusedBorderColor = Color(0xffe0e0e0),
-                        focusedBorderColor = Color(0xff2c5de5)
+                        unfocusedBorderColor = Color(0xffd7d7d7),
+                        focusedBorderColor = Color(0xff00a700)
                     )
                 )
+
+                Spacer(Modifier.padding(10.dp))
 
                 Row(
                     modifier = Modifier
@@ -201,6 +211,7 @@ class SettingsScreen(
                             .fillMaxWidth()
                             .fillMaxHeight()
                             .weight(7f),
+                        textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
                         shape = RoundedCornerShape(
                             topStart = 7.dp,
                             topEnd = 0.dp,
@@ -228,21 +239,21 @@ class SettingsScreen(
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.White,
                             unfocusedContainerColor = Color.White,
-                            unfocusedBorderColor = Color(0xffe0e0e0),
-                            focusedBorderColor = Color(0xff2c5de5)
+                            unfocusedBorderColor = Color(0xffd7d7d7),
+                            focusedBorderColor = Color(0xff00a700)
                         )
                     )
 
-                    // Button(
-                    IconButton(
+                    OutlinedIconButton(
                         modifier = Modifier
                             .padding(top = 7.dp)
                             .fillMaxHeight()
                             .weight(1f),
                         colors = IconButtonDefaults.iconButtonColors(
-                            contentColor = Color(0xff2c5de5),
-                            containerColor = Color(0xffd7d7d7)
+                            contentColor = Color(0xffa7a7a7),
+                            containerColor = Color(0xffffffff)
                         ),
+                        border = BorderStroke(1.dp, Color(0xffd7d7d7)),
                         shape = RoundedCornerShape(
                             topStart = 0.dp,
                             topEnd = 7.dp,
@@ -252,13 +263,13 @@ class SettingsScreen(
                         onClick = { roomid.value = "" }
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.Delete,
+                            imageVector = Icons.Rounded.Clear,
                             contentDescription = "Erase",
                         )
                     }
                 }
 
-                Spacer(Modifier.padding(16.dp))
+                Spacer(Modifier.padding(20.dp))
 
                 Button(
                     modifier = Modifier.fillMaxWidth(),

@@ -3,6 +3,7 @@
     <string name="r_map">Map</string>
     <string name="r_chat">Chat</string>
     <string name="r_set">Settings</string>
+    <string name="r_closeapp">Close app</string>
     <string name="apply">Apply</string>
 
     <string name="host_url">opaldone.su</string>
@@ -16,8 +17,8 @@
     <string name="chat_roomid">111</string>
 
     <string-array name="host_list">
-        <item>admigo.so</item>
         <item>opaldone.su</item>
         <item>opaldone.click</item>
+        <item>admigo.so</item>
     </string-array>
 </resources>

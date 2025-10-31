@@ -15,15 +15,21 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.compose.ui.platform.LocalContext
+import android.app.Activity
+import click.opaldone.opaloca.MainActivity
 import androidx.compose.ui.res.stringResource
 import click.opaldone.opaloca.dts.ShareTools
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.loga.show_log
 
-class NavController(val ctx: Context) {
+class Navig(val ctx: Context) {
+    private lateinit var nc: NavHostController
+
     data class BarItem(
         val title: String,
         val image: ImageVector,
@@ -34,6 +40,7 @@ class NavController(val ctx: Context) {
         object Mapa : NavRoutes("mapa")
         object Chat : NavRoutes("chat")
         object Settings : NavRoutes("settings")
+        object Closeapp : NavRoutes("closeapp")
     }
 
     @Composable
@@ -53,6 +60,11 @@ class NavController(val ctx: Context) {
                 title = stringResource(R.string.r_set),
                 image = Icons.Rounded.Settings,
                 route = NavRoutes.Settings.route
+            ),
+            BarItem(
+                title = stringResource(R.string.r_closeapp),
+                image = Icons.Rounded.Close,
+                route = NavRoutes.Closeapp.route
             )
         )
 
@@ -65,7 +77,7 @@ class NavController(val ctx: Context) {
                     selected = currentRoute == navItem.route,
                     onClick = {
                         navController.navigate(navItem.route) {
-                            launchSingleTop = true
+                            // launchSingleTop = true
                         }
                     },
                     icon = {
@@ -93,20 +105,23 @@ class NavController(val ctx: Context) {
 
     @Composable
     fun NavMain(roomid: String?) {
-        val nc = rememberNavController()
+        nc = rememberNavController()
 
         val start_route = startWithRoomId(roomid)
 
         Column() {
             NavHost(nc, startDestination = start_route, modifier = Modifier.weight(1f)) {
                 composable(NavRoutes.Mapa.route) {
-                    ScrMapa()
+                    ShowMapa()
                 }
                 composable(NavRoutes.Chat.route) {
-                    ScrChat()
+                    ShowChat()
                 }
                 composable(NavRoutes.Settings.route) {
-                    ScrSettings(nc)
+                    ShowSettings()
+                }
+                composable(NavRoutes.Closeapp.route) {
+                    CloseApp()
                 }
             }
 
@@ -114,28 +129,37 @@ class NavController(val ctx: Context) {
         }
     }
 
+    fun navMap() {
+        nc.navigate(NavRoutes.Mapa.route)
+    }
+
+    fun setRoomid(roomid: String) {
+        (ShareTools(ctx)).set_roomid(roomid)
+    }
+
     @Composable
-    fun ScrMapa() {
-        val sha = ShareTools(ctx)
-        var murl = sha.get_map_url()
-        val scr = MapScreen()
+    fun CloseApp() {
+        val activity = (LocalContext.current as? Activity)
+        activity?.finishAndRemoveTask();
+    }
+
+    @Composable
+    fun ShowMapa() {
+        var murl = (ShareTools(ctx)).get_map_url()
+        val scr = MapScreen(this)
         scr.Show(murl)
     }
 
     @Composable
-    fun ScrChat() {
-        val sha = ShareTools(ctx)
-        var murl = sha.get_chat_url()
-
-        show_log("murl = $murl")
-
-        val scr = MapScreen()
+    fun ShowChat() {
+        var murl = (ShareTools(ctx)).get_chat_url()
+        val scr = MapScreen(this)
         scr.Show(murl)
     }
 
     @Composable
-    fun ScrSettings(nc: NavController) {
-        val scr = SettingsScreen(ctx, nc, NavRoutes.Mapa.route)
+    fun ShowSettings() {
+        val scr = SettingsScreen(ctx, this)
         scr.Show()
     }
 }

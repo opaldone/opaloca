@@ -8,15 +8,28 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings
+import android.webkit.PermissionRequest
+import android.Manifest
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import android.webkit.JavascriptInterface
+import androidx.navigation.NavController
+import android.widget.Toast
+import android.view.Gravity
 import androidx.compose.runtime.DisposableEffect
 import click.opaldone.opaloca.dts.ShareTools
 import click.opaldone.opaloca.loga.show_log
 
-class MapScreen() {
+class MapScreen(private val nav: Navig) {
+    class ChatWebViewInterface(private val nav: Navig) {
+        @JavascriptInterface
+        fun sendRoomid(roomid: String) {
+            nav.setRoomid(roomid)
+        }
+    }
+
     @Composable
     fun Show(url_in: String) {
         var webView: WebView? by remember { mutableStateOf(null) }
@@ -29,16 +42,38 @@ class MapScreen() {
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
 
-                    webViewClient = WebViewClient()
-                    webChromeClient = WebChromeClient()
-
                     settings.apply {
                         javaScriptEnabled = true
                         domStorageEnabled = true
                         loadWithOverviewMode = true
                         useWideViewPort = true
+                        mediaPlaybackRequiresUserGesture = false
                         javaScriptCanOpenWindowsAutomatically = false
                         cacheMode = WebSettings.LOAD_NO_CACHE
+                    }
+
+                    addJavascriptInterface(ChatWebViewInterface(nav), "AndroidChatInterface")
+
+                    webViewClient = WebViewClient()
+
+                    webChromeClient = object : WebChromeClient() {
+                        override fun onPermissionRequest(request: PermissionRequest) {
+                            val requestedResources = request.resources
+                            val permissionsToRequest = mutableListOf<String>()
+
+                            for (resource in requestedResources) {
+                                when (resource) {
+                                    PermissionRequest.RESOURCE_VIDEO_CAPTURE -> {
+                                        permissionsToRequest.add(Manifest.permission.CAMERA)
+                                    }
+                                    PermissionRequest.RESOURCE_AUDIO_CAPTURE -> {
+                                        permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
+                                    }
+                                }
+                            }
+
+                            request.grant(request.resources)
+                        }
                     }
 
                     loadUrl("about:blank")

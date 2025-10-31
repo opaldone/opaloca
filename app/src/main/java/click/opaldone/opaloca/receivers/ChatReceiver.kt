@@ -9,6 +9,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import android.graphics.BitmapFactory
 import click.opaldone.opaloca.MainActivity
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.loga.show_log
@@ -47,7 +48,9 @@ class ChatReceiver : BroadcastReceiver() {
         )
 
         val builder = NotificationCompat.Builder(ctx, channelID)
-            .setSmallIcon(R.mipmap.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_launcher_fr)
+            .setLargeIcon(BitmapFactory.decodeResource(ctx.getResources(), R.drawable.ic_launcher_dr))
+            .setContentTitle("Someone wants to chat with You")
             .setContentText("Tap to start chatting")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
