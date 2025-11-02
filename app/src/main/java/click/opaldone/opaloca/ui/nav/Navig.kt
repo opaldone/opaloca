@@ -93,7 +93,7 @@ class Navig(val ctx: Context) {
     }
 
     private fun startWithRoomId(roomid: String?): String {
-        var ret = NavRoutes.Mapa.route
+        var ret = NavRoutes.Settings.route
 
         if (roomid != null) {
             ret = NavRoutes.Chat.route

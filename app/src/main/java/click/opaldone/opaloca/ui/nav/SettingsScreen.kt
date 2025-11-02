@@ -284,7 +284,7 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                         text = ctx.getString(R.string.apply),
                         modifier = Modifier
                         .padding(5.dp),
-                        fontSize = 18.sp
+                        fontSize = 14.sp
                     )
                 }
             }
