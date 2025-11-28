@@ -18,10 +18,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.compose.ui.platform.LocalContext
 import android.app.Activity
-import click.opaldone.opaloca.MainActivity
 import androidx.compose.ui.res.stringResource
 import click.opaldone.opaloca.dts.ShareTools
 import click.opaldone.opaloca.R
@@ -93,7 +91,7 @@ class Navig(val ctx: Context) {
     }
 
     private fun startWithRoomId(roomid: String?): String {
-        var ret = NavRoutes.Settings.route
+        var ret = NavRoutes.Mapa.route
 
         if (roomid != null) {
             ret = NavRoutes.Chat.route
@@ -139,7 +137,7 @@ class Navig(val ctx: Context) {
 
     @Composable
     fun CloseApp() {
-        val activity = (LocalContext.current as? Activity)
+        val activity = (ctx as? Activity)
         activity?.finishAndRemoveTask();
     }
 

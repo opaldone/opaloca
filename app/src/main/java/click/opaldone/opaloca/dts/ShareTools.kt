@@ -1,7 +1,7 @@
 package click.opaldone.opaloca.dts
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.core.content.edit
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.loga.show_log
 
@@ -22,15 +22,21 @@ class ShareTools(
     }
 
     fun set_host_url(nu: String) {
-        sha.edit().putString(KURL, nu).apply()
+        sha.edit {
+            putString(KURL, nu)
+        }
     }
 
     fun set_nik(ni: String) {
-        sha.edit().putString(KNIK, ni).apply()
+        sha.edit {
+            putString(KNIK, ni)
+        }
     }
 
     fun set_roomid(ri: String) {
-        sha.edit().putString(KRID, ri).apply()
+        sha.edit {
+            putString(KRID, ri)
+        }
     }
 
     fun get_map_url(): String {
