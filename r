@@ -5,12 +5,13 @@ cd $(dirname "${BASH_SOURCE[0]}")
 declare pro=$("pwd")
 declare aa="/mnt/terik/a_my/java/android_sdk/platform-tools/adb"
 declare app="click.opaldone.opaloca"
+
 declare par=$1
 
 if [[ ! $par ]]; then
     clear
     # $aa logcat -v tag
-    $aa logcat -v tag \
+    $aa logcat -v tag -v time \
         *:S  \
         WM-SystemFgDispatcher:I \
         WM-SystemFgDispatcher:W \
@@ -20,11 +21,6 @@ if [[ ! $par ]]; then
         AndroidRuntime:E \
         ActivityManager:W \
         ActivityManager:E \
-        System*:W \
-        System*:E \
-        chromium*:I \
-        chromium*:W \
-        chromium*:E \
         some:D
 
         # libPowerHal:I \
@@ -59,9 +55,6 @@ fi
 if [[ $par == "in" ]]; then
     declare apk="$pro/app/build/outputs/apk/debug/app-debug.apk"
     declare act="$app/$app.MainActivity"
-
-    # $aa -s "127.0.0.1:6555" install $apk
-    # $aa -s "127.0.0.1:6555" shell am start -n $act -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
 
     $aa install $apk
     $aa shell am start -n $act -a android.intent.action.MAIN -c android.intent.category.LAUNCHER

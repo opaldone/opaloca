@@ -10,6 +10,9 @@ import android.app.NotificationManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import android.graphics.BitmapFactory
+import androidx.core.content.ContextCompat;
+import android.Manifest
+import android.content.pm.PackageManager;
 import click.opaldone.opaloca.MainActivity
 import click.opaldone.opaloca.R
 import click.opaldone.opaloca.loga.show_log
@@ -34,6 +37,13 @@ class ChatReceiver : BroadcastReceiver() {
     }
 
     private fun send_notif(ctx: Context, roomid: String) {
+        if (ContextCompat.checkSelfPermission(
+            ctx, Manifest.permission.POST_NOTIFICATIONS
+        ) != PackageManager.PERMISSION_GRANTED) {
+            show_log("Permissions were not permitted")
+            return
+        }
+
         createChannel(ctx)
 
         val notificationIntent = Intent(ctx, MainActivity::class.java).apply {

@@ -1,6 +1,5 @@
 package click.opaldone.opaloca.ui.nav
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import android.webkit.WebView
@@ -15,11 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import android.webkit.JavascriptInterface
-import androidx.navigation.NavController
-import android.widget.Toast
-import android.view.Gravity
 import androidx.compose.runtime.DisposableEffect
-import click.opaldone.opaloca.dts.ShareTools
 import click.opaldone.opaloca.loga.show_log
 
 class MapScreen(private val nav: Navig) {

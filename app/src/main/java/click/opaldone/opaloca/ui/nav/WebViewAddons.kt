@@ -24,11 +24,7 @@ fun WebView.stopJavaScriptTimers() {
     }
     """.trimIndent()
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        evaluateJavascript(jsCode, null)
-    } else {
-        loadUrl("javascript:$jsCode")
-    }
+    evaluateJavascript(jsCode, null)
 }
 
 fun WebView.cleanup() {
