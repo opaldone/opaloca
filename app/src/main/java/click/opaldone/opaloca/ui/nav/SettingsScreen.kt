@@ -24,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.IconButtonDefaults
@@ -35,6 +36,7 @@ import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.Alignment
 
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,7 +78,9 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                     .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable)
                     .fillMaxWidth()
                     .padding(5.dp),
-                textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
+                textStyle = TextStyle(
+                    fontSize = 18.sp,
+                ),
                 shape = RoundedCornerShape(7.dp),
                 value = state.value,
                 onValueChange = {
@@ -87,16 +91,9 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                     Text(
                         text = lbl,
                         fontSize = 12.sp,
-                        color = Color(0xff777777),
                     )
                 },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expa) },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    unfocusedBorderColor = Color(0xffd7d7d7),
-                    focusedBorderColor = Color(0xff00a700)
-                )
             )
             DropdownMenu(
                 modifier = Modifier
@@ -166,7 +163,9 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
-                    textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
+                    textStyle = TextStyle(
+                        fontSize = 18.sp
+                    ),
                     shape = RoundedCornerShape(7.dp),
                     value = nik.value,
                     onValueChange = {
@@ -176,15 +175,8 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                         Text(
                             text = "Chat nickname",
                             fontSize = 12.sp,
-                            color = Color(0xff777777)
                         )
                     },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        unfocusedBorderColor = Color(0xffd7d7d7),
-                        focusedBorderColor = Color(0xff00a700)
-                    )
                 )
 
                 Spacer(Modifier.padding(10.dp))
@@ -204,7 +196,9 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                             .fillMaxWidth()
                             .fillMaxHeight()
                             .weight(7f),
-                        textStyle = TextStyle(fontSize = 18.sp, color = Color(0xff111111)),
+                        textStyle = TextStyle(
+                            fontSize = 18.sp
+                        ),
                         shape = RoundedCornerShape(
                             topStart = 7.dp,
                             topEnd = 0.dp,
@@ -224,18 +218,10 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                         label = {
                             Text(
                                 text = "Roomid",
-                                fontSize = 12.sp,
-                                color = Color(0xff777777)
+                                fontSize = 12.sp
                             )
-                        },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = Color.White,
-                            unfocusedContainerColor = Color.White,
-                            unfocusedBorderColor = Color(0xffd7d7d7),
-                            focusedBorderColor = Color(0xff00a700)
-                        )
+                        }
                     )
-
                     OutlinedIconButton(
                         modifier = Modifier
                             .padding(top = 8.dp)
@@ -243,14 +229,14 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                             .offset(x = (-2).dp)
                             .weight(1f),
                         colors = IconButtonDefaults.iconButtonColors(
-                            contentColor = Color(0xffa7a7a7),
-                            containerColor = Color(0xffffffff)
+                            contentColor = Color(0xffffffff),
+                            containerColor = Color(0xff2c5de5)
                         ),
-                        border = BorderStroke(1.dp, Color(0xffd7d7d7)),
+                        border = BorderStroke(1.dp, Color(0xff2c5de5)),
                         shape = RoundedCornerShape(
                             topStart = 0.dp,
                             topEnd = 7.dp,
-                            bottomStart =0.dp,
+                            bottomStart = 0.dp,
                             bottomEnd = 7.dp
                         ),
                         onClick = { roomid.value = "" }
@@ -264,21 +250,18 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
 
                 Spacer(Modifier.padding(20.dp))
 
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = Color(0xffffffff),
-                        containerColor = Color(0xff2c5de5)
-                    ),
-                    shape = RoundedCornerShape(7.dp),
-                    onClick = { saveSettings(host_url.value, nik.value, roomid.value) }
-                ) {
-                    Text(
-                        text = ctx.getString(R.string.apply),
-                        modifier = Modifier
-                        .padding(5.dp),
-                        fontSize = 14.sp
-                    )
+                Surface {
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(7.dp),
+                        onClick = { saveSettings(host_url.value, nik.value, roomid.value) }
+                    ) {
+                        Text(
+                            text = ctx.getString(R.string.apply),
+                            modifier = Modifier
+                            .padding(5.dp)
+                        )
+                    }
                 }
             }
         }
