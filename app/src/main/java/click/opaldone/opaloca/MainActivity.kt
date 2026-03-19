@@ -7,6 +7,7 @@ import android.Manifest
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import android.content.Context
+import click.opaldone.opaloca.ui.theme.OpalocaTheme
 import click.opaldone.opaloca.ui.nav.Navig
 import click.opaldone.opaloca.loga.show_log
 
@@ -29,7 +30,9 @@ class MainActivity : ComponentActivity() {
         val roomid = intent.getStringExtra("roomid")
 
         setContent {
-            NavStart(this, roomid)
+            OpalocaTheme {
+                NavStart(this, roomid)
+            }
         }
     }
 }
