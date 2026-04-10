@@ -9,33 +9,24 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.window.PopupProperties
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.foundation.layout.IntrinsicSize
-
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.Alignment
-
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -125,6 +116,22 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
     }
 
     @Composable
+    fun VersionInfo() {
+        val context = LocalContext.current
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+
+        val versionName = packageInfo.versionName
+
+        Text(
+            text = "Version $versionName",
+            modifier = Modifier.fillMaxWidth(),
+            color = Color(0xff777777),
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+
+    @Composable
     fun Show() {
         var host_url = remember { mutableStateOf(sha.get_host_url()) }
         val host_list = stringArrayResource(R.array.host_list)
@@ -137,14 +144,14 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                 color = Color(0xffffffff),
                 fontSize = 24.sp,
                 modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xff2c5de5))
-                .padding(
-                    start = 30.dp,
-                    end = 30.dp,
-                    top = 15.dp,
-                    bottom = 15.dp
-                )
+                    .fillMaxWidth()
+                    .background(Color(0xff2c5de5))
+                    .padding(
+                        start = 30.dp,
+                        end = 30.dp,
+                        top = 15.dp,
+                        bottom = 15.dp
+                    )
             )
 
             Column(
@@ -177,76 +184,63 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                             fontSize = 12.sp,
                         )
                     },
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                nik.value = ""
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(
+                                contentColor = MaterialTheme.colorScheme.primary
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Clear,
+                                contentDescription = "Clear"
+                            )
+                        }
+                    }
                 )
 
                 Spacer(Modifier.padding(10.dp))
 
-                Row(
+                OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(IntrinsicSize.Max)
-                        .padding(
-                            start = 4.dp,
-                            end = 2.dp,
-                        ),
-                    verticalAlignment = Alignment.Top,
-                ) {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .weight(7f),
-                        textStyle = TextStyle(
-                            fontSize = 18.sp
-                        ),
-                        shape = RoundedCornerShape(
-                            topStart = 7.dp,
-                            topEnd = 0.dp,
-                            bottomStart = 7.dp,
-                            bottomEnd = 0.dp
-                        ),
-                        value = roomid.value,
-                        onValueChange = {
-                            val seg = it.split("/")
-                            var va = seg[0]
-                            if (seg.size > 1) {
-                                va = seg[1]
-                            }
+                        .padding(5.dp),
+                    textStyle = TextStyle(
+                        fontSize = 18.sp
+                    ),
+                    shape = RoundedCornerShape(7.dp),
+                    value = roomid.value,
+                    onValueChange = {
+                        val seg = it.split("/")
+                        var va = seg[0]
+                        if (seg.size > 1) {
+                            va = seg[1]
+                        }
 
-                            roomid.value = va
-                        },
-                        label = {
-                            Text(
-                                text = "Roomid",
-                                fontSize = 12.sp
+                        roomid.value = va
+                    },
+                    label = {
+                        Text(
+                            text = "Chat roomid",
+                            fontSize = 12.sp
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { roomid.value = "" },
+                            colors = IconButtonDefaults.iconButtonColors(
+                                contentColor = MaterialTheme.colorScheme.primary
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Clear,
+                                contentDescription = "Clear"
                             )
                         }
-                    )
-                    OutlinedIconButton(
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .fillMaxHeight()
-                            .offset(x = (-2).dp)
-                            .weight(1f),
-                        colors = IconButtonDefaults.iconButtonColors(
-                            contentColor = Color(0xffffffff),
-                            containerColor = Color(0xff2c5de5)
-                        ),
-                        border = BorderStroke(1.dp, Color(0xff2c5de5)),
-                        shape = RoundedCornerShape(
-                            topStart = 0.dp,
-                            topEnd = 7.dp,
-                            bottomStart = 0.dp,
-                            bottomEnd = 7.dp
-                        ),
-                        onClick = { roomid.value = "" }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Clear,
-                            contentDescription = "Erase",
-                        )
                     }
-                }
+                )
 
                 Spacer(Modifier.padding(20.dp))
 
@@ -254,7 +248,9 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(7.dp),
-                        onClick = { saveSettings(host_url.value, nik.value, roomid.value) }
+                        onClick = {
+                            saveSettings(host_url.value, nik.value, roomid.value)
+                        }
                     ) {
                         Text(
                             text = ctx.getString(R.string.apply),
@@ -263,6 +259,10 @@ class SettingsScreen(val ctx: Context, val nav: Navig) {
                         )
                     }
                 }
+
+                Spacer(Modifier.padding(20.dp))
+
+                VersionInfo()
             }
         }
     }
